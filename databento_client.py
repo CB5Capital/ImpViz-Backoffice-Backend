@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Callable, Any
 from collections import deque
 import os
+from dotenv import load_dotenv
 
 try:
     import databento as db
@@ -18,12 +19,14 @@ except ImportError:
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+load_dotenv()
+
 class LiveFuturesDataClient:
     """Simple live futures data client using Databento API"""
 
     def __init__(self):
         # Use hardcoded API key for now
-        self.api_key = "db-yvLxQSrUHd35Xj6vxttXy3bjSccvS"
+        self.api_key = os.getenv('DATABENTO_API_KEY')
 
         if not DATABENTO_AVAILABLE:
             logger.error("Databento package not installed. Please run: pip install databento")
